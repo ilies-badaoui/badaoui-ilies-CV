@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Pendu — Ilies Badaoui</title>
+<meta name="description" content="Le jeu du pendu, refait en JavaScript pur avec clavier physique, dessin progressif et effets visuels.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="projects.css">
+</head>
+<body>
+
+<div class="noise"></div>
+
+<header class="nav">
+  <a href="../index.html" class="nav-brand">IB<span class="dot">.</span></a>
+  <nav class="nav-links">
+    <a href="../index.html#projets">← Retour au portfolio</a>
+  </nav>
+  <div class="nav-actions">
+    <button id="themeToggle" class="icon-btn" aria-label="Changer de thème" title="Changer de thème">
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="project-header">
+    <a href="../index.html#projets" class="back-link">← Tous les projets</a>
+    <h1>Le Pendu</h1>
+    <p class="project-tagline">
+      Devinez le mot avant que le dessin ne se termine. Indice : la première et la dernière lettre sont révélées.
+    </p>
+    <div class="project-tags">
+      <span class="tags"><span>JavaScript</span></span>
+      <span class="tags"><span>SVG animé</span></span>
+      <span class="tags"><span>Clavier physique</span></span>
+    </div>
+  </div>
+
+  <div class="project-stage">
+    <div class="card hangman-layout">
+      <div class="hangman-figure">
+        <svg viewBox="0 0 200 220">
+          <g class="gallows">
+            <line x1="20" y1="200" x2="120" y2="200"/>
+            <line x1="50" y1="200" x2="50" y2="20"/>
+            <line x1="50" y1="20" x2="130" y2="20"/>
+            <line x1="130" y1="20" x2="130" y2="45"/>
+          </g>
+          <circle class="part" data-part="0" cx="130" cy="60" r="15"/>
+          <line class="part" data-part="1" x1="130" y1="75" x2="130" y2="130"/>
+          <line class="part" data-part="2" x1="130" y1="90" x2="105" y2="115"/>
+          <line class="part" data-part="3" x1="130" y1="90" x2="155" y2="115"/>
+          <line class="part" data-part="4" x1="130" y1="130" x2="110" y2="170"/>
+          <line class="part" data-part="5" x1="130" y1="130" x2="150" y2="170"/>
+          <g class="part" data-part="6">
+            <line x1="123" y1="55" x2="129" y2="61"/>
+            <line x1="129" y1="55" x2="123" y2="61"/>
+            <line x1="131" y1="55" x2="137" y2="61"/>
+            <line x1="137" y1="55" x2="131" y2="61"/>
+          </g>
+          <path class="part" data-part="7" d="M122 68 Q130 62 138 68"/>
+        </svg>
+      </div>
+
+      <div class="hangman-main">
+        <div class="hangman-status">
+          <span class="attempts-left">Erreurs : <strong id="wrongCount">0</strong> / <span id="maxCount">8</span></span>
+          <button class="btn btn-ghost" id="restartBtn" style="padding:8px 16px;font-size:.82rem;">↻ Nouveau mot</button>
+        </div>
+
+        <ul class="word-display" id="wordDisplay"></ul>
+
+        <ul class="keyboard" id="keyboard"></ul>
+
+        <div class="game-overlay" id="gameOverlay">
+          <h3 id="overlayTitle"></h3>
+          <p id="overlayText"></p>
+          <button class="btn btn-primary" id="playAgainBtn">Rejouer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-notes">
+    <h2>À propos de cette version</h2>
+    <ul>
+      <li>Version originale : mot fixe côté client, clavier cliquable, mais le clavier physique ne fonctionnait pas (bug de lecture de la touche).</li>
+      <li>Amélioré ici : clavier physique fonctionnel (A–Z), dessin du pendu en SVG révélé progressivement, écran de victoire/défaite avec bouton rejouer, sans recharger la page.</li>
+    </ul>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>© <span id="year"></span> Ilies Badaoui — Concepteur Développeur d'Application.</p>
+</footer>
+
+<script src="../script.js"></script>
+<script src="pendu.js"></script>
+</body>
+</html>
