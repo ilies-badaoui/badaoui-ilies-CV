@@ -51,6 +51,7 @@
     <div class="card yuka-search">
       <div class="ljp-row">
         <input type="text" id="yukaQuery" placeholder="Code-barres du produit (ex : 3017620422003)…" autocomplete="off" inputmode="numeric">
+        <button class="btn btn-ghost" id="yukaScanBtn" title="Scanner avec la caméra">📷 Scanner</button>
         <button class="btn btn-primary" id="yukaSearchBtn">Chercher</button>
       </div>
       <p class="field-hint" style="margin-top:8px;">Cette recherche interroge une vraie base de données par code-barres. Essayez un des exemples :</p>
@@ -101,15 +102,29 @@
     <ul>
       <li>Version originale : application Angular, comparateur de produits alimentaires et cosmétiques (concept inspiré de Yuka).</li>
       <li>Amélioré ici : reconstruit en JavaScript vanilla branché sur la vraie base de données <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener" style="color:var(--accent);">Open Food Facts</a> — recherche par nom ou code-barres, Nutri-Score, groupe NOVA (degré de transformation), Eco-Score et liste des additifs affichés en direct.</li>
+      <li>Scan caméra : lecture de code-barres en direct depuis la caméra du téléphone ou de l'ordinateur (nécessite une connexion HTTPS, comme sur GitHub Pages).</li>
     </ul>
   </div>
 </main>
+
+<div class="scanner-overlay" id="scannerOverlay">
+  <div class="scanner-box card">
+    <div class="scanner-head">
+      <h3>Scanner un code-barres</h3>
+      <button class="icon-btn" id="scannerClose" aria-label="Fermer">✕</button>
+    </div>
+    <div id="qrReader"></div>
+    <p class="scanner-status" id="scannerStatus">Autorisez la caméra puis visez le code-barres…</p>
+  </div>
+</div>
 
 <footer class="footer">
   <p>© <span id="year"></span> Ilies Badaoui — Concepteur Développeur d'Application.</p>
 </footer>
 
 <script src="../script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script src="my-yuka.js"></script>
+<script src="barcode-scanner.js"></script>
 </body>
 </html>

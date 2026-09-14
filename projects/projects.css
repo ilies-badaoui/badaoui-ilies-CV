@@ -206,7 +206,7 @@
   text-transform: capitalize;
 }
 .ljp-form { display: flex; flex-direction: column; gap: 18px; }
-.ljp-row { display: flex; gap: 10px; }
+.ljp-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .ljp-row input {
   flex: 1;
   padding: 13px 16px;
@@ -424,3 +424,46 @@
   display: none;
 }
 .yuka-loading.show, .yuka-error.show { display: block; }
+
+/* ---------- Scanner caméra ---------- */
+.scanner-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.scanner-overlay.show { display: flex; }
+
+.scanner-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 22px;
+}
+.scanner-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.scanner-head h3 { font-size: 1.1rem; }
+
+#qrReader {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+  min-height: 220px;
+}
+#qrReader video { width: 100% !important; border-radius: 10px; }
+
+.scanner-status {
+  margin-top: 14px;
+  font-size: .85rem;
+  color: var(--text-soft);
+  text-align: center;
+}
