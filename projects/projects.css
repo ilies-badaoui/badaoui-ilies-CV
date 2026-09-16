@@ -135,14 +135,11 @@
 
 .keyboard {
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
   gap: 6px;
   list-style: none;
   padding: 0;
   margin: 0;
-}
-@media (max-width: 480px) {
-  .keyboard { grid-template-columns: repeat(7, 1fr); }
 }
 .keyboard li {
   aspect-ratio: 1;

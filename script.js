@@ -1,32 +1,6 @@
 (function () {
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Theme toggle
-  var root = document.documentElement;
-  var toggle = document.getElementById('themeToggle');
-  var stored = null;
-  try { stored = localStorage.getItem('theme'); } catch (e) {}
-  if (stored === 'light' || stored === 'dark') {
-    root.setAttribute('data-theme', stored);
-  }
-
-  toggle.addEventListener('click', function () {
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var current = root.getAttribute('data-theme') || (prefersDark ? 'dark' : 'light');
-    var next = current === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
-  });
-
-  // Mobile nav
-  var nav = document.querySelector('.nav');
-  var burger = document.getElementById('navBurger');
-  burger.addEventListener('click', function () {
-    nav.classList.toggle('open');
-  });
-  document.querySelectorAll('.nav-links a').forEach(function (link) {
-    link.addEventListener('click', function () { nav.classList.remove('open'); });
-  });
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   // Reveal on scroll
   var revealEls = document.querySelectorAll('.reveal');
@@ -42,5 +16,45 @@
     revealEls.forEach(function (el) { observer.observe(el); });
   } else {
     revealEls.forEach(function (el) { el.classList.add('in-view'); });
+  }
+
+  // Scroll to top button
+  var scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (scrollTopBtn) {
+    window.addEventListener('scroll', function () {
+      scrollTopBtn.classList.toggle('show', window.scrollY > 500);
+    });
+    scrollTopBtn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Dock nav active-section tracking
+  var dockLinks = document.querySelectorAll('.dock a[data-section]');
+  if (dockLinks.length && 'IntersectionObserver' in window) {
+    var sectionEls = [];
+    dockLinks.forEach(function (link) {
+      var id = link.dataset.section;
+      var el = id === 'top' ? document.getElementById('top') : document.getElementById(id);
+      if (el) sectionEls.push({ id: id, el: el });
+    });
+
+    var setActive = function (id) {
+      dockLinks.forEach(function (link) {
+        link.classList.toggle('active', link.dataset.section === id);
+      });
+    };
+
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      var visible = entries.filter(function (e) { return e.isIntersecting; });
+      if (visible.length) {
+        visible.sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; });
+        var match = sectionEls.find(function (s) { return s.el === visible[0].target; });
+        if (match) setActive(match.id);
+      }
+    }, { threshold: [0.2, 0.4, 0.6], rootMargin: '-15% 0px -55% 0px' });
+
+    sectionEls.forEach(function (s) { sectionObserver.observe(s.el); });
+    setActive('top');
   }
 })();
